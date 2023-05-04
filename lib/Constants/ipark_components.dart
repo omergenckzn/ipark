@@ -17,6 +17,40 @@ class IParkComponents {
       ),
     );
   }
+  static Row headlineIconDescriptionWidget(
+      String babyName, String description) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(width: 4,),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IParkComponents.headlineTextWidget(babyName, TextAlign.start),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: IParkComponents.descriptionTextWidget(
+                  description, TextAlign.start),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  static Text headlineTextWidget(String content, TextAlign align) {
+    return Text(
+      content,
+      textAlign: align,
+      style: IParkStyles.font32HeadlineTextStyle,
+    );
+  }
+
+  static Text descriptionTextWidget(String content, TextAlign align) {
+    return Text(content,
+        textAlign: align, style: IParkStyles.font16DescriptionTextStyle);
+  }
+
   static InkWell backPopButton(BuildContext context) {
     return InkWell(
       customBorder: const CircleBorder(),
@@ -32,13 +66,7 @@ class IParkComponents {
           )),
     );
   }
-  static Text headlineTextWidget(String content) {
-    return Text(
-      content,
-      style: IParkStyles.font28HeadlineTextStyle,
-    );
-  }
-  
+
 }
 
 class LargeCtaButton extends StatelessWidget with IParkComponents {

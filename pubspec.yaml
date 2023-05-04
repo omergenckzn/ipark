@@ -38,6 +38,11 @@ dependencies:
   firebase_auth: ^4.4.1
   flutter_svg: 1.1.6
   flutter_remix: ^0.0.3
+  provider: ^6.0.5
+  permission_handler: ^10.2.0
+  grock: ^0.2.0
+  image_picker: ^0.8.6+4
+  firebase_storage: ^11.0.14
 
 dev_dependencies:
   flutter_test:

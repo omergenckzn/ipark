@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ipark/Screens/onBoarding/onBoardingWelcome/on_boarding_welcome_view.dart';
+import 'package:ipark/Provider/firestrore_provider.dart';
+import 'package:ipark/Screens/page_router.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -31,10 +33,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => FirestoreProvider(),
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
 
-      home: OnBoardingWelcomeView(),
+        home: PageRouter(),
+      ),
     );
   }
 }

@@ -10,7 +10,7 @@ class IParkConstants {
 }
 
 class IParkPaddings {
-  static EdgeInsets mainScaffoldPadding = const EdgeInsets.symmetric(horizontal: 16,vertical: 16);
+  static EdgeInsets mainScaffoldPadding = const EdgeInsets.symmetric(horizontal: 16,vertical: 0);
 
 }
 
@@ -20,6 +20,7 @@ class IParkColors {
   static Color ctaButtonBackgroundColor = const Color.fromRGBO(128, 148, 175, 1);
   static Color activeInputBorderColor = const Color.fromRGBO(64, 90, 131, 1);
   static Color stableInputBorderColor = Colors.grey;
+  static const Color greyBorderColor = Color.fromRGBO(190, 190, 190, 1);
 
 }
 
@@ -39,6 +40,20 @@ class IParkStyles {
     fontWeight: FontWeight.w700,
     fontSize: 28,
     color: IParkColors.blackHeadlineColor,
+  );
+
+  static TextStyle font18GreyTextStyle = const TextStyle(
+      color: IParkColors.greyBorderColor,
+      fontFamily: IParkConstants.fontFamilyText,
+      fontWeight: FontWeight.w500,
+      letterSpacing: IParkConstants.textLetterSpacing,
+      fontSize: 18);
+
+  static TextStyle navigationBarItemTextStyle = const TextStyle(
+    fontFamily: IParkConstants.fontFamilyTextSfUi,
+    fontWeight: FontWeight.w600,
+    fontSize: 10,
+    letterSpacing: -0.41,
   );
 
   static TextStyle font16DescriptionTextStyle = TextStyle(
