@@ -52,19 +52,26 @@ class _CarsViewState extends State<CarsView> {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   final CarModel car = snapshot.data![index].model;
                   return ListTile(
-
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        car.imageUrl,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     title: Text(car.name),
                     subtitle: Text(car.licencePlate),
                     trailing: IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         CloudFirebaseService.deleteCarFromFirestore(snapshot.data![index].docId,car.imageUrl ,context);
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
                     ),
                   );

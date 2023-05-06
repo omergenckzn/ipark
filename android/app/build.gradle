@@ -34,6 +34,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["libs"]
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -53,6 +65,13 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        externalNativeBuild {
+            cmake {
+                cppFlags '-frtti -fexceptions -std=c++11'
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+
     }
 
     buildTypes {
