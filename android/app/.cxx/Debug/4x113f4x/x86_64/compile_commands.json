@@ -1,0 +1,7 @@
+[
+{
+  "directory": "C:/Users/Omer/Documents/GitHub/ipark/android/app/.cxx/Debug/4x113f4x/x86_64",
+  "command": "C:\\Users\\Omer\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe --target=x86_64-none-linux-android21 --gcc-toolchain=C:/Users/Omer/AppData/Local/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/Omer/AppData/Local/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dmy_functions_EXPORTS -I../../../../../../include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -frtti -fexceptions -std=c++11 -fno-limit-debug-info  -fPIC -o CMakeFiles\\my_functions.dir\\C_\\Users\\Omer\\Documents\\GitHub\\ipark\\open_cv\\my_functions.cpp.o -c C:\\Users\\Omer\\Documents\\GitHub\\ipark\\open_cv\\my_functions.cpp",
+  "file": "C:\\Users\\Omer\\Documents\\GitHub\\ipark\\open_cv\\my_functions.cpp"
+}
+]

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19.1)
+cmake_minimum_required(VERSION 3.18.1)
 include_directories(../../include)
 
 add_library(lib_opencv SHARED IMPORTED)
