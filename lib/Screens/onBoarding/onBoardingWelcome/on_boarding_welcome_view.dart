@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ipark/Constants/ipark_components.dart';
 import 'package:ipark/Constants/ipark_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ipark/Screens/Worker%20pages/worker_login_email_view.dart';
 import 'package:ipark/Screens/onBoarding/onBoardingEmail/on_boarding_email_view.dart';
 import 'package:ipark/Screens/onBoarding/onBoardingName/on_boarding_name_view.dart';
 import 'package:ipark/Screens/onBoarding/onBoardingWelcome/on_boarding_welcome_model.dart';
@@ -45,7 +46,7 @@ class _OnBoardingWelcomeViewState extends State<OnBoardingWelcomeView> {
             ),
             TextButton(
               onPressed: () {
-
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WorkerLoginEmailView()));
               },
               child: Text(model.workerLogin,style: IParkStyles.font16TextButtonTextStyle),
             ),

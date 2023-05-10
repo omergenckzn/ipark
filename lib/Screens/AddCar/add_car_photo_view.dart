@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grock/grock.dart';
@@ -34,9 +35,6 @@ class _AddCarPhotoState extends State<AddCarPhoto> {
   @override
   Widget build(BuildContext context) {
 
-    print(_buttonEnabled);
-
-
     return Scaffold(
       appBar: IParkComponents.customAppBar(context),
       body: Padding(
@@ -55,7 +53,8 @@ class _AddCarPhotoState extends State<AddCarPhoto> {
                     _buttonEnabled = false;
                   });
                 String url = await FirebaseStorageService.uploadImageToFirebaseStorage(_imageFile!,  DateTime.now());
-                CarModel model = CarModel(widget.title, widget.brand, widget.licensePlate, url, widget.chassisNumber);
+
+                CarModel model = CarModel(widget.title, widget.brand, widget.licensePlate, url, widget.chassisNumber,FirebaseAuth.instance.currentUser!.uid);
                 await CloudFirebaseService.addCarDataToFirestore(model, context);
                 Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => CarsView()), (route) => false);
                   setState(() {

@@ -70,6 +70,7 @@ class _CarsViewState extends State<CarsView> {
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
+
                         CloudFirebaseService.deleteCarFromFirestore(snapshot.data![index].docId,car.imageUrl ,context);
                         setState(() {});
                       },

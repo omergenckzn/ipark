@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ipark/Constants/ipark_components.dart';
 import 'package:ipark/Models/car_data.dart';
 import 'package:ipark/Models/car_model.dart';
 import 'package:ipark/Models/customer_model.dart';
@@ -133,14 +134,19 @@ class CloudFirebaseService {
   static Future<void> addCarDataToFirestore(CarModel model, BuildContext context) async {
     try {
       String uid = FirebaseAuth.instance.currentUser!.uid;
-      CollectionReference carCollectionRef = FirebaseFirestore.instance.collection("customerUsers").doc(uid).collection('cars');
-      carCollectionRef.add({
+      CollectionReference carUserCollectionRef = FirebaseFirestore.instance.collection("customerUsers");
+
+      carUserCollectionRef.doc(uid).update({'carPlates' : FieldValue.arrayUnion([model.licencePlate])});
+
+      CollectionReference carCollectionRef = FirebaseFirestore.instance.collection("cars");
+      carCollectionRef.doc(model.licencePlate).set({
+        'uid': uid,
         "name": model.name,
         "licencePlate": model.licencePlate,
         "brand": model.brand,
         "imageUrl": model.imageUrl,
         "chassisNumber":model.chassisNumber,
-      });
+      },SetOptions(merge: true));
     } catch (e) {
       CloudFirebaseService.showCustomSnackBar("Something went wrong. Please try again", context);
     }
@@ -148,21 +154,41 @@ class CloudFirebaseService {
 
   static Stream<List<CarData>> getCarDataFromFirestore(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    CollectionReference carCollectionRef = FirebaseFirestore.instance.collection("customerUsers").doc(uid).collection('cars');
-    return carCollectionRef.snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => CarData(doc.id, CarModel(
-          doc['name'],
-          doc['brand'],
-          doc['licencePlate'],
-          doc['imageUrl'],
-          doc['chassisNumber'],
-        ))).toList());
+    DocumentReference userDocument = FirebaseFirestore.instance.collection("customerUsers").doc(uid);
+    CollectionReference carCollectionRef = FirebaseFirestore.instance.collection('cars');
+
+    return Stream.fromFuture(userDocument.get().then((DocumentSnapshot snapshot) {
+      if (snapshot.exists) {
+        List<String> carPlatesList = List<String>.from(snapshot.get('carPlates'));
+
+        List<Future<CarData?>> futures = [];
+        carPlatesList.forEach((plate) {
+          futures.add(carCollectionRef.doc(plate).get().then((DocumentSnapshot data) {
+            if (data.exists && data != null) {
+              return CarData(data['licencePlate'], CarModel(data['name'], data['brand'], data["licencePlate"], data["imageUrl"], data["chassisNumber"], uid));
+            } else {
+              return null;
+            }
+          }));
+        });
+
+        return Future.wait(futures).then((carDataList) {
+          return carDataList.where((carData) => carData != null).cast<CarData>().toList();
+        });
+      } else {
+        return Future.value(<CarData>[]); // Return an empty list
+      }
+    }));
   }
+
+
 
   static Future<void> deleteCarFromFirestore(String docId,String url ,BuildContext context) async {
     try {
       String uid = FirebaseAuth.instance.currentUser!.uid;
-      CollectionReference carCollectionRef = FirebaseFirestore.instance.collection("customerUsers").doc(uid).collection('cars');
+      CollectionReference userCarCollectionRef = FirebaseFirestore.instance.collection('customerUsers');
+      userCarCollectionRef.doc(uid).update({'carPlates' : FieldValue.arrayRemove([docId])});
+      CollectionReference carCollectionRef = FirebaseFirestore.instance.collection('cars');
       await carCollectionRef.doc(docId).delete();
       await FirebaseStorageService.deleteImageFromFirebaseStorage(url);
     } catch (e) {
