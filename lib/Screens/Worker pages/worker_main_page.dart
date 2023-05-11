@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ipark/Constants/ipark_components.dart';
 import 'package:ipark/Constants/ipark_constants.dart';
+import 'package:ipark/Screens/Worker%20pages/car_check_in.dart';
+
+import 'car_check_out.dart';
 
 class WorkerMainPage extends StatefulWidget {
   const WorkerMainPage({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class _WorkerMainPageState extends State<WorkerMainPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 32,vertical: 48),
+          padding: IParkPaddings.workerScaffoldPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -24,12 +27,15 @@ class _WorkerMainPageState extends State<WorkerMainPage> {
               Center(
                 child: Column(
                   children: [
+
+
                     LargeCtaButton(textContent: 'Car check in', onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const CarCheckIn()));
 
                     }),
                     const SizedBox(height: 32,),
                     LargeCtaButton(textContent: 'Car checkout', onPressed: (){
-
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const CarCheckOut()));
                     }),
                   ],
                 ),

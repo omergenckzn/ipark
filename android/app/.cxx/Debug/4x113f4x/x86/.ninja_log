@@ -1,3 +1,5 @@
 # ninja log v5
 1	1605	705075685	CMakeFiles/my_functions.dir/C_/Users/Omer/Documents/GitHub/ipark/open_cv/my_functions.cpp.o	7cfc0eb15461fa9e
 1607	1692	705075685	C:/Users/Omer/Documents/GitHub/ipark/build/app/intermediates/cxx/Debug/4x113f4x/obj/x86/libmy_functions.so	56e8b3b1a0ef21e3
+4	1951	705431096	CMakeFiles/my_functions.dir/C_/Users/Omer/Documents/GitHub/ipark/open_cv/my_functions.cpp.o	7cfc0eb15461fa9e
+1951	2120	705431096	C:/Users/Omer/Documents/GitHub/ipark/build/app/intermediates/cxx/Debug/4x113f4x/obj/x86/libmy_functions.so	56e8b3b1a0ef21e3

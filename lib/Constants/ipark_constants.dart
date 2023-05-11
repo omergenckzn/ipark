@@ -11,6 +11,7 @@ class IParkConstants {
 
 class IParkPaddings {
   static EdgeInsets mainScaffoldPadding = const EdgeInsets.symmetric(horizontal: 16,vertical: 0);
+  static EdgeInsets workerScaffoldPadding = const EdgeInsets.symmetric(horizontal: 32,vertical: 48);
 
 }
 
@@ -33,6 +34,13 @@ class IParkStyles {
     fontSize: 32,
     color: IParkColors.blackHeadlineColor,
   );
+
+
+  static TextStyle datePickerDateIndicatorStyle = const TextStyle(
+      fontFamily: IParkConstants.fontFamilyText,
+      fontWeight: FontWeight.w400,
+      letterSpacing: IParkConstants.textLetterSpacing,
+      fontSize: 28);
 
   static TextStyle font28HeadlineTextStyle = TextStyle(
     letterSpacing: IParkConstants.textLetterSpacing,

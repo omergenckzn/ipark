@@ -1,67 +1,91 @@
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grock/grock.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ipark/Constants/ipark_components.dart';
 import 'package:ipark/Constants/ipark_constants.dart';
-import 'package:ipark/Models/car_model.dart';
-import 'package:ipark/Screens/Cars/cars_view.dart';
 import 'package:ipark/Services/cloud_firebase_service.dart';
-import 'package:ipark/Services/firebase_storage_service.dart';
+import 'package:ipark/Services/ffi.dart';
 import 'package:ipark/Services/handle_permissions.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class AddCarPhoto extends StatefulWidget {
-  final String title;
-  final String brand;
-  final String licensePlate;
-  final String chassisNumber;
-
-
-  const AddCarPhoto({Key? key,required this.title, required this.brand, required this.licensePlate, required this.chassisNumber}) : super(key: key);
+class CarCheckIn extends StatefulWidget {
+  const CarCheckIn({Key? key}) : super(key: key);
 
   @override
-  State<AddCarPhoto> createState() => _AddCarPhotoState();
+  State<CarCheckIn> createState() => _CarCheckInState();
 }
 
-class _AddCarPhotoState extends State<AddCarPhoto> {
+class _CarCheckInState extends State<CarCheckIn> {
 
+  String? imagePath;
   File? _imageFile;
-  bool _buttonEnabled = true;
+  DateTime _pickedDate = DateTime.now();
+  TextEditingController controller = TextEditingController();
+
+  void _setDate(DateTime pickedDate) {
+    setState(() {
+      _pickedDate = pickedDate;
+    });
+  }
+
+  @override
+  void initState() {
+    Permission.manageExternalStorage.request().then((value) => print("manageExternalStorage: ${value}"));
+    Permission.storage.request().then((value) => print("storage: ${value}"));
+    super.initState();
+  }
+
+  void _onConvertClick() async {
+    if (imagePath != null) {
+      List<String> outputPath = imagePath!.split(".");
+      outputPath[outputPath.length - 2] = "${outputPath[outputPath.length - 2]}_gray";
+      print(outputPath.join("."));
+
+      convertImageToGrayImage(imagePath!, outputPath.join("."));
+
+      setState(() {
+        imagePath = outputPath.join(".");
+      });
+    }
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: IParkComponents.customAppBar(context),
-      body: Padding(
-        padding: IParkPaddings.mainScaffoldPadding,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IParkComponents.headlineTextWidget("Add a photo", TextAlign.start),
-              const SizedBox(height: 32,),
-              imageWidgetDecider(),
-              const SizedBox(height: 32,),
-              Center(
-                child: LargeCtaButton(textContent: "Save your car", onPressed: _buttonEnabled && _imageFile != null ? () async {
-                  setState(() {
-                    _buttonEnabled = false;
-                  });
-                String url = await FirebaseStorageService.uploadImageToFirebaseStorage(_imageFile!,  DateTime.now());
+      body: SafeArea(
+        child: Padding(
+          padding: IParkPaddings.workerScaffoldPadding,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IParkComponents.headlineTextWidget("Car check in", TextAlign.start),
+                const SizedBox(height: 8,),
+                IParkComponents.descriptionTextWidget("Please scan the car plate and enter the enterance date.", TextAlign.start),
 
-                CarModel model = CarModel(widget.title, widget.brand, widget.licensePlate, url, widget.chassisNumber,FirebaseAuth.instance.currentUser!.uid);
-                await CloudFirebaseService.addCarDataToFirestore(model, context);
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const CarsView()), (route) => false);
-                  setState(() {
-                    _buttonEnabled = true;
-                  });
-                } : null),
-              )
-            ],
+                const SizedBox(height: 48,),
+                DatePickerTextButton(initialDate: _pickedDate, setDate: _setDate),
+                const SizedBox(height: 24,),
+                imageWidgetDecider(),
+
+                const SizedBox(height: 32,),
+
+                CustomTextFieldStateful(controller: controller, placeholderText: "Car plate", isPassword: false),
+                const SizedBox(height: 32,),
+                Center(child: LargeCtaButton(textContent: "Start charging", onPressed: () async {
+
+                  await CloudFirebaseService.startCharging(controller.text, _pickedDate,context,);
+                  Navigator.of(context).pop();
+
+                })),
+
+              ],
+            ),
           ),
         ),
       ),
@@ -107,11 +131,7 @@ class _AddCarPhotoState extends State<AddCarPhoto> {
           Center(
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.file(
-                  _imageFile!,
-                  fit: BoxFit.cover,
-                  height: 311,
-                )),
+                child: Image.file(File(imagePath!), gaplessPlayback: true,height: 311,)),
           ),
           const SizedBox(
             height: 24,
@@ -121,7 +141,7 @@ class _AddCarPhotoState extends State<AddCarPhoto> {
                 onPressed: () {
                   setState(() {
                     _imageFile = null;
-
+                    imagePath = null;
                   });
                 },
                 child: Text(
@@ -135,27 +155,6 @@ class _AddCarPhotoState extends State<AddCarPhoto> {
   }
 
   void cameraOrGallery(BuildContext context) {
-    if (Platform.isIOS) {
-      showCupertinoDialog(
-          context: context,
-          builder: (context) => CupertinoAlertDialog(
-            title: Text("Pick Image"),
-            content: Text("Save the image of your car"),
-            actions: [
-              CupertinoDialogAction(
-                  child: Text("Camera"),
-                  onPressed: () async {
-                    await _pickImage(ImageSource.camera);
-                  }),
-              CupertinoDialogAction(
-                child: Text("Gallery"),
-                onPressed: () async {
-                  await _pickImage(ImageSource.gallery);
-                },
-              )
-            ],
-          ));
-    } else {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -176,13 +175,14 @@ class _AddCarPhotoState extends State<AddCarPhoto> {
                   child: Text("Gallery")),
             ],
           ));
-    }
+
   }
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile != null) {
       setState(() {
+        imagePath = pickedFile.path;
         _imageFile = File(pickedFile.path);
       });
     }

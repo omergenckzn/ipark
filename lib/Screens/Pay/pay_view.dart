@@ -36,7 +36,17 @@ class _PayViewState extends State<PayView> {
             const SizedBox(height: 32,),
             nameMailStream(customerModel.name),
             const SizedBox(height: 32,),
+            Text("Pending payment", style: IParkStyles.font28HeadlineTextStyle,),
 
+            const SizedBox(height: 148,),
+
+            Text("Previous Visits", style: IParkStyles.font28HeadlineTextStyle,),
+            FutureBuilder(
+
+              builder: (context, snapshot) {
+                return Text("Text");
+              },
+            )
 
           ],
         ),

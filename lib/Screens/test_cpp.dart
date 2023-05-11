@@ -21,7 +21,7 @@ class _TestCppState extends State<TestCpp> {
 
   @override
   void initState() {
-    print("OpenCV Version: ${getOpenCVVersion()}");
+
     Permission.manageExternalStorage.request().then((value) => print("manageExternalStorage: ${value}"));
     Permission.storage.request().then((value) => print("storage: ${value}"));
     super.initState();
@@ -48,6 +48,8 @@ class _TestCppState extends State<TestCpp> {
     if (image == null) return;
     setState(() => this.imagePath = image.path);
   }
+
+
 
 
   @override
