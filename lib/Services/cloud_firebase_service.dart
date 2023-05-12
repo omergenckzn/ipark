@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:grock/grock.dart';
 import 'package:ipark/Constants/ipark_components.dart';
 import 'package:ipark/Models/car_data.dart';
 import 'package:ipark/Models/car_model.dart';
@@ -26,25 +27,6 @@ class CloudFirebaseService {
       throw e;
     }
   }
-
-  // Future<UserCredential> signUpWithEmailPassword(String email, String password) async {
-  //   try {
-  //     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //       email: email,
-  //       password: password,
-  //     );
-  //     return userCredential;
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'weak-password') {
-  //       print('The password provided is too weak.');
-  //     } else if (e.code == 'email-already-in-use') {
-  //       print('The account already exists for that email.');
-  //     } else {
-  //       print('Error creating user: $e');
-  //     }
-  //     throw e;
-  //   }
-  // }
 
   static Future<UserCredential?> signInOrCreateAccountWithEmail(
       CustomerModel model, String password, BuildContext context) async {
@@ -233,7 +215,7 @@ class CloudFirebaseService {
 
         if (data != null) {
           String carOwnerUid = data['uid'];
-          DocumentReference userRef =FirebaseFirestore.instance
+          DocumentReference userRef = FirebaseFirestore.instance
               .collection("customerUsers")
               .doc(carOwnerUid);
 
@@ -244,18 +226,22 @@ class CloudFirebaseService {
               .doc(plateNumber)
               .get();
 
-          if(!pendingPaymentsDoc.exists) {
 
 
+           CarModel carModel = CarModel.fromMap(data);
+
+          if (!pendingPaymentsDoc.exists) {
             await userRef.collection('pendingPaymentDoc').doc(plateNumber).set({
               'startDate': Timestamp.fromDate(startDate),
+              'carPlateNumber': carModel.licencePlate,
+              'carImageUrl': carModel.imageUrl,
             });
             CloudFirebaseService.showCustomSnackBar(
                 "Check in successful", context);
-
           } else {
-
-            CloudFirebaseService.showCustomSnackBar('The customer has another transaction. Please ask for payments for registering new one.', context);
+            CloudFirebaseService.showCustomSnackBar(
+                'The customer has another transaction. Please ask for payments for registering new one.',
+                context);
           }
         } else {
           CloudFirebaseService.showCustomSnackBar(
@@ -288,13 +274,14 @@ class CloudFirebaseService {
               .collection("customerUsers")
               .doc(carOwnerUid);
 
-          DocumentReference pendingPaymentsRef = userRef.collection('pendingPaymentDoc').doc(plateNumber);
+          DocumentReference pendingPaymentsRef =
+              userRef.collection('pendingPaymentDoc').doc(plateNumber);
           DocumentSnapshot pendingPaymentsDoc = await pendingPaymentsRef.get();
 
-          if(pendingPaymentsDoc.exists){
+          if (pendingPaymentsDoc.exists) {
             Map data = pendingPaymentsDoc.data() as Map<String, dynamic>;
 
-            if(data['endDate'] == null) {
+            if (data['endDate'] == null) {
               pendingPaymentsRef.update({
                 'endDate': Timestamp.fromDate(endDate),
               });
@@ -308,7 +295,6 @@ class CloudFirebaseService {
             CloudFirebaseService.showCustomSnackBar(
                 "The car has not being checked in yet.", context);
           }
-
         } else {
           CloudFirebaseService.showCustomSnackBar(
               "The car is not registered to the system.", context);
@@ -322,4 +308,73 @@ class CloudFirebaseService {
           "Something went wrong. Please try again", context);
     }
   }
+
+  static Future<List<Map<String, dynamic>>> getPendingPayments() async {
+    List<Map<String, dynamic>> documentList = [];
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('customerUsers')
+          .doc(uid)
+          .collection('pendingPaymentDoc')
+          .get();
+
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        QueryDocumentSnapshot doc = querySnapshot.docs[i];
+        if (doc.data() != null && doc.data().isNotEmpty) {
+          documentList.add(doc.data() as Map<String, dynamic>);
+        }
+      }
+
+      return documentList;
+
+    } catch (e) {
+      return [];
+    }
+  }
+
+
+  static Future<List<Map<String, dynamic>>> getPreviousPayments() async {
+    List<Map<String, dynamic>> documentList = [];
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('customerUsers')
+          .doc(uid)
+          .collection('completedPayments')
+          .get();
+
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        QueryDocumentSnapshot doc = querySnapshot.docs[i];
+        if (doc.data() != null && doc.data().isNotEmpty) {
+          documentList.add(doc.data() as Map<String, dynamic>);
+        }
+      }
+
+      return documentList;
+
+    } catch (e) {
+      return [];
+    }
+  }
+
+  static void executePayment(String licensePlate, BuildContext context) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentReference documentReference = firestore.collection('customerUsers').doc(uid).collection('pendingPaymentDoc').doc(licensePlate);
+
+    DocumentSnapshot documentSnapshot = await firestore.collection('customerUsers').doc(uid).collection('pendingPaymentDoc').doc(licensePlate).get();
+
+    await firestore.collection('customerUsers').doc(uid).collection('completedPayments').doc(licensePlate+DateTime.now().toString()).set(documentSnapshot.data() as Map<String, dynamic>);
+
+    documentReference.delete().then((value) {
+      CloudFirebaseService.showCustomSnackBar("You successfully pay the parking ticket", context);
+    }).catchError((error) {
+      CloudFirebaseService.showCustomSnackBar("Something went wrong. Please contact our employees.", context);
+    });
+  }
+
+
 }

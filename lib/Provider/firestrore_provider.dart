@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,9 +28,23 @@ class FirestoreProvider extends ChangeNotifier {
 
      }
    }
+}
 
+class DocumentListener extends ChangeNotifier {
+  StreamSubscription<DocumentSnapshot>? _subscription;
+  String? cacheUid = FirebaseAuth.instance.currentUser?.uid;
 
+  DocumentListener() {
+    _subscription = FirebaseFirestore.instance
+        .collection('customerUsers')
+        .doc(cacheUid)
+        .snapshots()
+        .listen((event) => notifyListeners());
+  }
 
-
-
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
 }

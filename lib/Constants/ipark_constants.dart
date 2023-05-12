@@ -80,6 +80,14 @@ class IParkStyles {
     color: Colors.grey,
   );
 
+  static TextStyle font16PayTextStyle = TextStyle(
+    letterSpacing: IParkConstants.textLetterSpacing,
+    fontFamily: "Circular-Std",
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+    color: IParkColors.activeInputBorderColor,
+  );
+
   static TextStyle inputPlaceholderStyle = const TextStyle(
     fontFamily: IParkConstants.fontFamilyText,
     letterSpacing: IParkConstants.textLetterSpacing,
