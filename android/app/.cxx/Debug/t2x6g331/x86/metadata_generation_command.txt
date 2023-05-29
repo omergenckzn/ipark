@@ -1,0 +1,25 @@
+                    Executable : C:\Users\Omer\AppData\Local\Android\Sdk\cmake\3.18.1\bin\cmake.exe
+arguments : 
+-HC:\Users\Omer\Documents\GitHub\ipark\android\app
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_SYSTEM_VERSION=21
+-DANDROID_PLATFORM=android-21
+-DANDROID_ABI=x86
+-DCMAKE_ANDROID_ARCH_ABI=x86
+-DANDROID_NDK=C:\Users\Omer\AppData\Local\Android\Sdk\ndk\23.1.7779620
+-DCMAKE_ANDROID_NDK=C:\Users\Omer\AppData\Local\Android\Sdk\ndk\23.1.7779620
+-DCMAKE_TOOLCHAIN_FILE=C:\Users\Omer\AppData\Local\Android\Sdk\ndk\23.1.7779620\build\cmake\android.toolchain.cmake
+-DCMAKE_MAKE_PROGRAM=C:\Users\Omer\AppData\Local\Android\Sdk\cmake\3.18.1\bin\ninja.exe
+-DCMAKE_CXX_FLAGS=-frtti -fexceptions -std=c++11
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\Omer\Documents\GitHub\ipark\build\app\intermediates\cxx\Debug\t2x6g331\obj\x86
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\Omer\Documents\GitHub\ipark\build\app\intermediates\cxx\Debug\t2x6g331\obj\x86
+-DCMAKE_BUILD_TYPE=Debug
+-BC:\Users\Omer\Documents\GitHub\ipark\android\app\.cxx\Debug\t2x6g331\x86
+-GNinja
+-DANDROID_STL=c++_shared
+jvmArgs : 
+
+
+                    Build command args: []
+                    Version: 2

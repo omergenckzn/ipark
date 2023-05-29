@@ -1,0 +1,3 @@
+C:/Users/Omer/Documents/GitHub/ipark/android/app/.cxx/Debug/t2x6g331/x86_64/CMakeFiles/rebuild_cache.dir
+C:/Users/Omer/Documents/GitHub/ipark/android/app/.cxx/Debug/t2x6g331/x86_64/CMakeFiles/my_functions.dir
+C:/Users/Omer/Documents/GitHub/ipark/android/app/.cxx/Debug/t2x6g331/x86_64/CMakeFiles/edit_cache.dir

@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:grock/grock.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ipark/Constants/ipark_components.dart';
@@ -23,6 +23,7 @@ class _CarCheckOutState extends State<CarCheckOut> {
   File? _imageFile;
   DateTime _pickedDate = DateTime.now();
   TextEditingController controller = TextEditingController();
+  final textRecognizer = TextRecognizer();
 
   void _setDate(DateTime pickedDate) {
     setState(() {
@@ -50,6 +51,7 @@ class _CarCheckOutState extends State<CarCheckOut> {
       });
     }
   }
+
 
 
   @override
@@ -163,12 +165,78 @@ class _CarCheckOutState extends State<CarCheckOut> {
             TextButton(
                 onPressed: () async {
                   await _pickImage(ImageSource.camera);
+                  if (_imageFile != null) {
+                    InputImage image = InputImage.fromFile(_imageFile!);
+
+                    final recognizedText = await textRecognizer.processImage(image);
+                    String unProcessedText = recognizedText.text;
+
+                    List<TextBlock> list = recognizedText.blocks;
+
+
+                    unProcessedText = unProcessedText.replaceAll(' ', '');
+
+                    RegExp regex = RegExp(r'^(0[1-9]|[1-7][0-9]|8[01])(\s*\b[a-zA-Z]\b\s*\d{4,5}|\s*\b[a-zA-Z]{2}\b\s*\d{3,4}|\s*\b[a-zA-Z]{3}\b\s*\d{2,4})$');
+
+
+
+
+                    list.forEach((element) {
+                      var match = regex.firstMatch(element.text);
+                      if(match != null) {
+                        var plateNumber = match.group(0);
+                        setState(() {
+                          plateNumber = plateNumber!.replaceAll(' ', '');
+                          controller.text = plateNumber!;
+                        });
+
+                      }
+                    });
+
+                  } else {
+                    CloudFirebaseService.showCustomSnackBar("Something went wrong.", context);
+                  }
+
+
                   Navigator.of(context).pop();
                 },
                 child: Text("Camera")),
             TextButton(
                 onPressed: () async {
                   await _pickImage(ImageSource.gallery);
+                  if (_imageFile != null) {
+                    InputImage image = InputImage.fromFile(_imageFile!);
+
+                    final recognizedText = await textRecognizer.processImage(image);
+                    String unProcessedText = recognizedText.text;
+
+                    List<TextBlock> list = recognizedText.blocks;
+
+
+                    unProcessedText = unProcessedText.replaceAll(' ', '');
+
+                    RegExp regex = RegExp(r'^(0[1-9]|[1-7][0-9]|8[01])(\s*\b[a-zA-Z]\b\s*\d{4,5}|\s*\b[a-zA-Z]{2}\b\s*\d{3,4}|\s*\b[a-zA-Z]{3}\b\s*\d{2,4})$');
+
+                    print('unProcessedText: $unProcessedText');
+
+
+                    list.forEach((element) {
+                      var match = regex.firstMatch(element.text);
+                      if(match != null) {
+                        var plateNumber = match.group(0);
+                        plateNumber = plateNumber!.replaceAll(' ', '');
+                        setState(() {
+                          controller.text = plateNumber!;
+                        });
+
+                      }
+                    });
+
+                  } else {
+                    CloudFirebaseService.showCustomSnackBar("Something went wrong.", context);
+                  }
+
+
                   Navigator.of(context).pop();
                 },
                 child: Text("Gallery")),
