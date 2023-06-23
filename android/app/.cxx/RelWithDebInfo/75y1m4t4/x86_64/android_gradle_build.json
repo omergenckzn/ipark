@@ -1,0 +1,40 @@
+{
+  "buildFiles": [
+    "C:\\Users\\Omer\\Documents\\GitHub\\ipark\\android\\app\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\Omer\\AppData\\Local\\Android\\sdk\\cmake\\3.18.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\Omer\\Documents\\GitHub\\ipark\\android\\app\\.cxx\\RelWithDebInfo\\75y1m4t4\\x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\Omer\\AppData\\Local\\Android\\sdk\\cmake\\3.18.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\Omer\\Documents\\GitHub\\ipark\\android\\app\\.cxx\\RelWithDebInfo\\75y1m4t4\\x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "my_functions::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86_64",
+      "artifactName": "my_functions",
+      "output": "C:\\Users\\Omer\\Documents\\GitHub\\ipark\\build\\app\\intermediates\\cxx\\RelWithDebInfo\\75y1m4t4\\obj\\x86_64\\libmy_functions.so",
+      "runtimeFiles": [
+        "C:\\Users\\Omer\\Documents\\GitHub\\ipark\\android\\app\\src\\main\\jniLibs\\x86_64\\libopencv_java4.so"
+      ]
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "C:\\Users\\Omer\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe",
+      "cppCompilerExecutable": "C:\\Users\\Omer\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

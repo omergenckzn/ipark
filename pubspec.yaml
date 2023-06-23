@@ -44,6 +44,8 @@ dependencies:
   google_mlkit_text_recognition: ^0.6.0
   image_picker: ^0.8.6+4
   firebase_storage: ^11.0.14
+  map: ^1.4.1
+  latlng: ^0.2.1
 
 dev_dependencies:
   flutter_test:

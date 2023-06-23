@@ -1,0 +1,7 @@
+Executable : C:\Users\Omer\AppData\Local\Android\sdk\cmake\3.18.1\bin\ninja.exe
+arguments : 
+-C
+C:\Users\Omer\Documents\GitHub\ipark\android\app\.cxx\RelWithDebInfo\75y1m4t4\x86_64
+my_functions
+jvmArgs : 
+

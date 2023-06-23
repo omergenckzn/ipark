@@ -31,15 +31,15 @@ class FirestoreProvider extends ChangeNotifier {
 }
 
 class DocumentListener extends ChangeNotifier {
-  StreamSubscription<DocumentSnapshot>? _subscription;
+  StreamSubscription<QuerySnapshot>? _subscription;
   String? cacheUid = FirebaseAuth.instance.currentUser?.uid;
 
   DocumentListener() {
     _subscription = FirebaseFirestore.instance
         .collection('customerUsers')
         .doc(cacheUid)
-        .snapshots()
-        .listen((event) => notifyListeners());
+        .collection("pendingPaymentDoc").snapshots().
+        listen((event) => notifyListeners());
   }
 
   @override

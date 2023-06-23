@@ -10,13 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49181868-b054-4dec-95b7-e11267cf19ed" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/illustrations/iSparkMapImage.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Worker pages/car_check_in.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Worker pages/car_check_in.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Constants/ipark_components.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Constants/ipark_components.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Provider/firestrore_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Provider/firestrore_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Pay/pay_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Pay/pay_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/Premium/premium_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Premium/premium_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/Worker pages/car_check_out.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Worker pages/car_check_out.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Screens/test_cpp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/test_cpp.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Services/ffi.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Services/ffi.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +61,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "C:/Users/Omer/Documents/GitHub/ipark",
+    "last_opened_file_path": "C:/Users/Omer/Documents/GitHub/StandartProgramlamaYapilari",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -71,6 +76,7 @@
       <recent name="C:\Users\Omer\Documents\GitHub\ipark\fonts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Omer\Documents\GitHub\ipark\assets\illustrations" />
       <recent name="C:\Users\Omer\Documents\GitHub\ipark\android\libs" />
       <recent name="C:\Users\Omer\Documents\GitHub\ipark\open_cv" />
       <recent name="C:\Users\Omer\Documents\GitHub\ipark\lib\Services" />

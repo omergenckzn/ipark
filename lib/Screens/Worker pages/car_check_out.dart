@@ -179,8 +179,6 @@ class _CarCheckOutState extends State<CarCheckOut> {
                     RegExp regex = RegExp(r'^(0[1-9]|[1-7][0-9]|8[01])(\s*\b[a-zA-Z]\b\s*\d{4,5}|\s*\b[a-zA-Z]{2}\b\s*\d{3,4}|\s*\b[a-zA-Z]{3}\b\s*\d{2,4})$');
 
 
-
-
                     list.forEach((element) {
                       var match = regex.firstMatch(element.text);
                       if(match != null) {
@@ -212,12 +210,10 @@ class _CarCheckOutState extends State<CarCheckOut> {
 
                     List<TextBlock> list = recognizedText.blocks;
 
-
                     unProcessedText = unProcessedText.replaceAll(' ', '');
 
                     RegExp regex = RegExp(r'^(0[1-9]|[1-7][0-9]|8[01])(\s*\b[a-zA-Z]\b\s*\d{4,5}|\s*\b[a-zA-Z]{2}\b\s*\d{3,4}|\s*\b[a-zA-Z]{3}\b\s*\d{2,4})$');
 
-                    print('unProcessedText: $unProcessedText');
 
 
                     list.forEach((element) {

@@ -1,0 +1,2 @@
+ninja: Entering directory `C:\Users\Omer\Documents\GitHub\ipark\android\app\.cxx\RelWithDebInfo\75y1m4t4\arm64-v8a'
+ninja: no work to do.

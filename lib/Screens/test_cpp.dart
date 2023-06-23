@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ipark/Services/ffi.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 class TestCpp extends StatefulWidget {
   const TestCpp({Key? key}) : super(key: key);
 
@@ -14,15 +13,14 @@ class TestCpp extends StatefulWidget {
 }
 
 class _TestCppState extends State<TestCpp> {
-
   String? imagePath;
   int processMillisecond = 0;
 
-
   @override
   void initState() {
-
-    Permission.manageExternalStorage.request().then((value) => print("manageExternalStorage: ${value}"));
+    Permission.manageExternalStorage
+        .request()
+        .then((value) => print("manageExternalStorage: ${value}"));
     Permission.storage.request().then((value) => print("storage: ${value}"));
     super.initState();
   }
@@ -30,7 +28,8 @@ class _TestCppState extends State<TestCpp> {
   void _onConvertClick() async {
     if (imagePath != null) {
       List<String> outputPath = imagePath!.split(".");
-      outputPath[outputPath.length - 2] = "${outputPath[outputPath.length - 2]}_gray";
+      outputPath[outputPath.length - 2] =
+          "${outputPath[outputPath.length - 2]}_gray";
       print(outputPath.join("."));
       Stopwatch stopwatch = new Stopwatch()..start();
       convertImageToGrayImage(imagePath!, outputPath.join("."));
@@ -44,25 +43,65 @@ class _TestCppState extends State<TestCpp> {
   }
 
   void _onSelectImageClick() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 100);
+    final image = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 100);
     if (image == null) return;
     setState(() => this.imagePath = image.path);
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(child: imagePath != null ? Image.file(File(imagePath!), gaplessPlayback: true) : Container()),
-          ElevatedButton(onPressed: (){_onSelectImageClick();
-          }, child: Text("Select")),
-          ElevatedButton(onPressed: (){
-            _onConvertClick();
-          }, child: Text("Convert"))
+          Expanded(
+              child: imagePath != null
+                  ? Image.file(File(imagePath!), gaplessPlayback: true)
+                  : Container()),
+
+
+
+          SizedBox(
+            height: 150,
+            child: Dismissible(
+              key: Key('dismissable_text'),
+              background: Container(
+                color: Colors.green,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Text",
+
+                ),
+              ),
+              secondaryBackground: Container(
+                color: Colors.red,
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "red",
+
+                ),
+              ),
+              onDismissed: (direction) {
+                print('Dismissed');
+              },
+              child: ListTile(
+                title: Text('Swipe me away!!'),
+              ),
+            ),
+          ),
+
+
+
+          ElevatedButton(
+              onPressed: () {
+                _onSelectImageClick();
+              },
+              child: Text("Select")),
+          ElevatedButton(
+              onPressed: () {
+                _onConvertClick();
+              },
+              child: Text("Convert"))
         ],
       ),
     );

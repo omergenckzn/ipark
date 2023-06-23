@@ -30,6 +30,8 @@ class _PayViewState extends State<PayView> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return ChangeNotifierProvider(
       create: (context) => DocumentListener(),
       child: Consumer<DocumentListener>(
